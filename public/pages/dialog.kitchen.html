@@ -1,0 +1,27 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Kitchen Print</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="width: 600px; max-height:900px; ">
+
+        <md-input-container>
+            <label>Remarks</label>
+            <input ng-model="remarks" onclick="this.select();" md-autofocus
+                   onkeypress="if ( event.keyCode == 13 ){  $('#done_btn').click(); return false;}">
+        </md-input-container>
+
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel()">
+            Cancel
+        </md-button>
+
+        <md-button ng-click="done()" id="done_btn" style="margin-right:20px;" >
+            Print
+        </md-button>
+    </div>
+</md-dialog>

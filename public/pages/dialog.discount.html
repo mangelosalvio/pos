@@ -1,0 +1,63 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Apply Discount</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="width: 600px; max-height:900px; ">
+
+        <div>
+            <md-radio-group ng-model="discount.disc_type">
+                <md-radio-button value="no_discount">No Discount</md-radio-button>
+                <md-radio-button value="senior">Senior Citizen</md-radio-button>
+                <div style="padding-left: 50px;">
+                    <md-radio-group ng-model="discount.senior.disc_type" ng-show="discount.disc_type == 'senior'">
+                        <md-radio-button value="dine">Dine</md-radio-button>
+                        <md-radio-button value="carry">
+                            Carry
+                        </md-radio-button>
+                        <md-content layout-padding layout="row" layout-sm="column" ng-show="discount.senior.disc_type == 'dine'">
+                            <md-input-container>
+                                <label>No of Seniors</label>
+                                <input ng-model="discount.senior.dine_no_of_seniors" onclick="this.select();">
+                            </md-input-container>
+                        </md-content>
+                        <md-content layout-padding layout="row" layout-sm="column" ng-show="discount.senior.disc_type == 'carry'">
+                            <md-input-container>
+                                <label>No of Seniors</label>
+                                <input ng-model="discount.senior.no_of_seniors" onclick="this.select();">
+                            </md-input-container>
+
+                            <md-input-container>
+                                <label>No of Persons</label>
+                                <input ng-model="discount.senior.no_of_persons" onclick="this.select();">
+                            </md-input-container>
+                        </md-content>
+                    </md-radio-group>
+                </div>
+                <md-radio-button value="pwd"> PWD </md-radio-button>
+            </md-radio-group>
+        </div>
+        <div layout>
+            <span flex></span>
+            <md-checkbox class="md-secondary" ng-model="select_all" ng-change="selectAll();"></md-checkbox>
+        </div>
+        <md-divider></md-divider>
+        <div ng-repeat="order in orders">
+            <md-list style="padding-top:0px; padding-bottom:0px;">
+                <md-list-item ng-repeat="item in order.details">
+                    <p>{{ item.product_desc }}</p>
+                    <md-checkbox class="md-secondary" ng-model="item.is_disc_applied" ng-change="applyDiscount();"></md-checkbox>
+                </md-list-item>
+                </md-header>
+            </md-list>
+        </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+        <span flex></span>
+        <md-button ng-click="done()" style="margin-right:20px;" mg-autofocus >
+            Done
+        </md-button>
+    </div>
+</md-dialog>

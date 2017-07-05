@@ -1,0 +1,42 @@
+<div class="layout horizontal" style="height: 100%;" >
+    <div class="vertical layout flex" style="padding:5px; height:100%; position: relative;">
+        <div class="layout horizontal wrap table-cards-container flex-10">
+            <a ng-href="#/table/{{ table._id }}" ng-repeat="table in tables track by $index | orderBy : table.desc">
+                <md-card  class="ng-class : {{ tableStatus(table); }}">
+                    <md-card-content>
+                        <p>
+                            {{ table.desc }}
+                        </p>
+                    </md-card-content>
+                </md-card>
+            </a>
+        </div>
+
+        <div class="layout horizontal wrap table-cards-container flex-10">
+            <a ng-href="#/table/{{ table._id }}" ng-repeat="table in takeouts | filter:search track by $index">
+                <md-card  class="ng-class : {{ tableStatus(table); }}">
+                    <md-card-content>
+                        <p>
+                            {{ table.customer_name }}
+                        </p>
+                    </md-card-content>
+                </md-card>
+            </a>
+        </div>
+
+        <div class="layout horizontal wrap table-cards-container flex-2">
+            <md-input-container>
+                <label>Search Take-out</label>
+                <input ng-model="search">
+            </md-input-container>
+        </div>
+
+        <md-card ng-click="addTakeOut();" style="width:100px; position: absolute; bottom: 10px; right: 10px; background-color: #673ab7; font-weight:bold; color:#fff;">
+            <md-card-content>
+                <p style="text-align: center;">
+                    TAKE-OUT
+                </p>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>

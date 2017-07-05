@@ -1,0 +1,61 @@
+<style>
+    .products-table{
+        border-collapse: collapse;
+        width:100%;
+    }
+
+    .products-table td{
+        border-bottom: 1px solid #c0c0c0;
+        padding: 10px 5px;
+        font-size:12px;
+        color:rgb(87,87,87);
+    }
+
+    .products-table td input{
+        padding:3px;
+    }
+
+    .products-table thead td{
+        color: rgb(54,54,54);
+    }
+</style>
+
+<div class="layout horizontal">
+    <div class="layout vertical flex-6" style="padding:20px;">
+        <md-input-container>
+            <label>Category Description</label>
+            <input ng-model="category.category_desc" id="category_desc" autofocus="autofocus"
+                   onkeypress="if ( event.keyCode == 13 ){ $('#save_btn').click(); return false;}">
+        </md-input-container>
+
+
+        <md-button class="md-raised" ng-click="save()" id="save_btn">Save</md-button>
+    </div>
+
+    <div class="flex"></div>
+
+    <div class="layout vertical flex-6">
+        <md-content style="height:600px; padding:20px;">
+            <table class="products-table">
+                <thead>
+                <tr>
+                    <td style="width:2%;"></td>
+                    <td style="text-align:left;">Category Desc</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="category in categories">
+                    <td nowrap>
+                        <iron-icon icon="close" style="color:#f00; cursor: pointer;" ng-click="delete(category);"></iron-icon>
+                        <iron-icon icon="create" style="color:#607d8b; cursor: pointer;" ng-click="edit(category);"></iron-icon>
+                    </td>
+                    <td style="text-align:left;">
+                        {{ category.category_desc }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </md-content>
+
+    </div>
+</div>

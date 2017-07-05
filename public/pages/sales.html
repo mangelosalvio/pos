@@ -1,0 +1,83 @@
+<style>
+    .search-sales-table{
+        width:100%;
+        border-collapse: collapse;
+    }
+    .search-sales-table thead td{
+        color:rgb(117,117,117);
+        border-bottom: 1px solid #c0c0c0;
+    }
+
+    .search-sales-table tbody td{
+        padding:3px;
+        border-bottom: 1px solid #c0c0c0;
+        padding: 10px 5px;
+        font-size:12px;
+        color:rgb(33,33,33);
+    }
+
+    .search-sales-table tr:hover td{
+        background-color: #eeeeee;
+        cursor: pointer;
+    }
+    .search-sales-table td:nth-child(n+6){
+        text-align: right;
+    }
+</style>
+<link rel="stylesheet" href="css/pagination.css"/>
+<div class="layout horizontal">
+    <div style="padding:20px;" class="flex">
+        <md-content style="padding:20px;" class="flex">
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label>Search</label>
+                    <input ng-model="search" ng-keypress="searchOnEnter($event)">
+                </md-input-container>
+                <md-button class="md-raised" ng-click="searchSales()">Search</md-button>
+            </div>
+
+
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+            <table class="search-sales-table">
+                <thead>
+                <tr>
+                    <td>OS#</td>
+                    <td>Date/Time</td>
+                    <td>Table</td>
+                    <td>Customer</td>
+                    <td>Net Amount</td>
+                    <td>Cash Amount</td>
+                    <td>Change Amount</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr dir-paginate="sale in sales | orderBy: sale.id | itemsPerPage : salesPerPage"  total-items = "totalSales" current-page="pagination.current" ng-click="viewSale(sale)">
+                    <td>
+                        {{ sale.id }}
+                    </td>
+                    <td style="text-align:left;">
+                        {{ sale.sale_datetime }}
+                    </td>
+                    <td style="text-align:left;">
+                        {{ sale.table.table_desc}}
+                    </td>
+                    <td style="text-align:left;">
+                        {{ sale.customer_name}}
+                    </td>
+                    <td style="text-align:right;">
+                        {{ sale.net_amount | number : 2 }}
+                    </td>
+                    <td style="text-align:right;">
+                        {{ sale.cash_amount | number : 2 }}
+                    </td>
+                    <td style="text-align:right;">
+                        {{ sale.change_amount | number : 2 }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+        </md-content>
+
+    </div>
+</div>

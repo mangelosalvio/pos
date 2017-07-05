@@ -1,0 +1,23 @@
+<div class="layout vertical" style="height:100%;">
+    <md-content>
+        <md-toolbar layout-padding>
+            <h2>Sale Inventory</h2>
+        </md-toolbar>
+
+        <md-radio-group ng-model="report_data">
+            <md-radio-button value="sale-inventory">Sale Inventory</md-radio-button>
+            <md-radio-button value="daily-sales"> Daily Sales</md-radio-button>
+            <md-radio-button value="sales-transaction">Sales Transaction</md-radio-button>
+            <md-radio-button value="voided-sales">Voided Sales</md-radio-button>
+        </md-radio-group>
+
+        <md-datepicker ng-model="from_date" md-placeholder="From date"></md-datepicker>
+        <md-datepicker ng-model="to_date" md-placeholder="From date"></md-datepicker>
+        <md-button class="md-raised" ng-click="search();" id="add_btn">Search</md-button>
+        <md-button class="md-raised" onclick="printIframe('frame')" id="save_btn">Print</md-button>
+    </md-content>
+
+    <md-content layout-padding class="flex" style="height:100%; width:100%;">
+        <iframe  id="frame" frameborder="0" ng-src="{{ report_src }}" style="width: 100%; height:100%;"></iframe>
+    </md-content>
+</div>

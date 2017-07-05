@@ -1,0 +1,23 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Enter Customer</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="width: 600px; max-height:900px; ">
+
+        <md-input-container>
+            <label>Customer Name</label>
+            <input ng-model="input" onclick="this.select();" md-autofocus
+                   onkeypress="if ( event.keyCode == 13 ){  $('#done_btn').click(); return false;}">
+        </md-input-container>
+
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+        <span flex></span>
+        <md-button ng-click="done()" id="done_btn" style="margin-right:20px;" >
+            Done
+        </md-button>
+    </div>
+</md-dialog>

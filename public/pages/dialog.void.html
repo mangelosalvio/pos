@@ -1,0 +1,35 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Void Sale</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="width: 600px; max-height:900px; ">
+
+        <md-input-container>
+            <label>Username</label>
+            <input ng-model="input.username" id="username" onclick="this.select();" md-autofocus
+                   onkeypress="if ( event.keyCode == 13 ){  $('#password').focus(); return false;}">
+        </md-input-container>
+
+        <md-input-container>
+            <label>Password</label>
+            <input ng-model="input.password" type="password" id="password" onclick="this.select();"
+                   onkeypress="if ( event.keyCode == 13 ){  $('#os_no').focus(); return false;}">
+        </md-input-container>
+
+        <md-input-container>
+            <label>Enter OS #</label>
+            <input ng-model="input.os_no" id="os_no" onclick="this.select();"
+                   onkeypress="if ( event.keyCode == 13 ){  $('#done_btn').click(); return false;}">
+        </md-input-container>
+
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+        <span flex></span>
+        <md-button ng-click="done()" id="done_btn" style="margin-right:20px;" >
+            Done
+        </md-button>
+    </div>
+</md-dialog>

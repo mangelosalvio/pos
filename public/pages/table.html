@@ -1,0 +1,252 @@
+<div class="layout horizontal" style="height: 100%;" >
+    <div class="flex-6 layout vertical" style="height:100%;">
+        <paper-card class="layout vertical fullbleed" style="height:70%" elevation="1">
+            <div class="card-content" style="height:100%;">
+                <div style="height:80%; overflow: auto;" class="layout vertical orders-container">
+                    <div ng-show="table.customer_name != ''" style="font-weight:bold; margin: 5px 0px;">Customer: {{ table.customer_name }}</div>
+                    <table class="order-table sales-table">
+                        <thead>
+                        <tr>
+                            <td>QTY</td>
+                            <td>PRODUCT</td>
+                            <td>PRICE</td>
+                            <td>LESS VAT</td>
+                            <td>DISC</td>
+                            <td>AMOUNT</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in order.details track by $index">
+                            <td nowrap>
+                                <iron-icon icon="close" style="color:#f00; cursor: pointer;" ng-click="deleteItemInOrder(item);"></iron-icon>
+                                {{ item.quantity | number : 2 }}
+                            </td>
+                            <td>{{ item.product_desc }}</td>
+                            <td>{{ item.price | number : 2 }}</td>
+                            <td>{{ item.vat_disc | number : 2 }}</td>
+                            <td>{{ item.disc | number : 2 }}</td>
+                            <td>{{ item.amount | number : 2 }}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: right;">{{ orderTotal() | number : 2 }}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+
+
+                    <md-card ng-repeat="(i,order) in table.orders track by $index">
+                        <md-card-content>
+                            <div class="horizontal layout">
+                                <div class="flex"><h4>Order #{{ i+1 }}</h4></div>
+                                <div>
+                                    <iron-icon icon="print" ng-click="reprintKitchen(order)"></iron-icon>
+                                    <iron-icon icon="close" ng-click="deleteOrder(order, table.orders);"></iron-icon>
+                                </div>
+                            </div>
+
+                            <div style="font-size: 11px;">Remarks: {{ order.remarks }}</div>
+
+                            <table class="order-table sales-table">
+                                <thead>
+                                <tr>
+                                    <td>QTY</td>
+                                    <td>PRODUCT</td>
+                                    <td>PRICE</td>
+                                    <td>LESS VAT</td>
+                                    <td>DISC</td>
+                                    <td>AMOUNT</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in order.details track by $index">
+                                    <td nowrap>
+                                        <iron-icon icon="close" style="color:#f00; cursor: pointer;" ng-click="deleteItemInOrders(item,order);"></iron-icon>
+                                        {{ item.quantity | number : 2 }}
+                                    </td>
+                                    <td>{{ item.product_desc }}</td>
+                                    <td>{{ item.price | number : 2 }}</td>
+                                    <td>{{ item.vat_disc | number : 2 }}</td>
+                                    <td>{{ item.disc | number : 2 }}</td>
+                                    <td>{{ item.amount | number : 2 }}</td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align: right;">{{ total(order) | number : 2 }}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </paper-card>
+
+        <paper-card style="margin-top: 5px; height:10%;" elevation="2" class="total-amount-container" >
+            <div class="card-content">
+                <div class="horizontal layout center">
+                    <div class="flex" style="color:#fff; text-align:right; padding-right:20px;">
+                         Total Amount
+                    </div>
+                    <div class="horizontal layout center" style="font-weight:bold; font-size:36px; color:#fff;">
+                        {{ ordersTotal() | number : 2 }}
+                    </div>
+                </div>
+
+            </div>
+        </paper-card>
+
+        <md-input-container>
+            <label>{{ label }}</label>
+            <input ng-model="input" id="input" autofocus="autofocus" ng-keyup="keyup($event);">
+        </md-input-container>
+
+    </div>
+    <div class="flex-10 vertical layout" style="padding:5px;">
+
+
+        <div class="flex">
+            <md-content ng-repeat="category in categories track by $index" class="horizontal layout wrap product-item-container flex"
+                        style="overflow: auto; background: none;" ng-show="category_id == category.id">
+                <md-card ng-repeat="product in category.products track by $index" class="product" ng-click="addItemToOrder(product);">
+                    <md-card-content>
+                        {{ product.product_desc }}
+                    </md-card-content>
+                </md-card>
+            </md-content>
+        </div>
+
+
+        <div class="vertical layout">
+
+            <div class="horizontal layout wrap category-container">
+                <md-card ng-repeat="category in categories track by $index" class="table-cards cards" ng-click="selectCategory(category);">
+                    <md-card-content class="card-content" style="text-align:center;">
+                        {{ category.category_desc }}
+                    </md-card-content>
+                </md-card>
+            </div>
+
+            <div class="horizontal layout wrap functions-container">
+                <a ng-href="#/">
+                    <paper-card animated-shadow="true" class="cards table-cards">
+                        <div class="card-content">
+                            <iron-icon icon="arrow-back"></iron-icon>
+                            <div>&nbsp;</div>
+                            <div>Back</div>
+                        </div>
+                    </paper-card>
+                </a>
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="clearOrders();">
+                    <div class="card-content">
+                        <iron-icon icon="communication:clear-all"></iron-icon>
+                        <div style='font-weight: bold;'>&nbsp;</div>
+                        <div>Clear</div>
+                    </div>
+                </paper-card>
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="enterCustomerName();">
+                    <div class="card-content">
+                        <iron-icon icon="social:person"></iron-icon>
+                        <div style='font-weight: bold;'>&nbsp;</div>
+                        <div>Customer</div>
+                    </div>
+                </paper-card>
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="doneOrder();">
+                    <div class="card-content">
+                        <iron-icon icon="done"></iron-icon>
+                        <div style='font-weight: bold;'>F7</div>
+                        <div>Done</div>
+                    </div>
+                </paper-card>
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="applyDiscount($event);">
+                    <div class="card-content">
+                        <iron-icon icon="loyalty"></iron-icon>
+                        <div style='font-weight: bold;'>F8</div>
+                        <div>Discount</div>
+                    </div>
+                </paper-card>
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="printBill();">
+                    <div class="card-content">
+                        <iron-icon icon="description"></iron-icon>
+                        <div style='font-weight: bold;'>F9</div>
+                        <div>Bill</div>
+                    </div>
+                </paper-card>
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="finishTransaction();">
+                    <div class="card-content">
+                        <iron-icon icon="done-all"></iron-icon>
+                        <div style='font-weight: bold;'>F10</div>
+                        <div>Finish</div>
+                    </div>
+                </paper-card>
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="reprintInvoice();">
+                    <div class="card-content">
+                        <iron-icon icon="done-all"></iron-icon>
+                        <div style='font-weight: bold;'>&nbsp</div>
+                        <div>Reprint</div>
+                    </div>
+                </paper-card>
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="voidSale();">
+                    <div class="card-content">
+                        <iron-icon icon="close"></iron-icon>
+                        <div style='font-weight: bold;'>&nbsp</div>
+                        <div>Void Sale</div>
+                    </div>
+                </paper-card>
+
+                <!--XREAD ZREAD-->
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="xread();">
+                    <div class="card-content">
+                        <iron-icon icon="account-balance-wallet"></iron-icon>
+                        <div style='font-weight: bold;'>&nbsp</div>
+                        <div>XREAD</div>
+                    </div>
+                </paper-card>
+
+                <paper-card animated-shadow="true" class="cards table-cards" ng-click="zread();">
+                    <div class="card-content">
+                        <iron-icon icon="assignment-turned-in"></iron-icon>
+                        <div style='font-weight: bold;'>&nbsp</div>
+                        <div>ZREAD</div>
+                    </div>
+                </paper-card>
+
+                <div class="flex"></div>
+
+                <paper-card animated-shadow="true" class="cards table-cards" style="background-color: #000;">
+                    <div class="card-content" style="height:100%;">
+                        <iron-icon icon="view-column" style="color:#fff;"></iron-icon>
+                        <br/>
+                        <br/>
+                        <div style='font-weight: bold; color: #fff; font-size: 1vw;' ng-show="table.desc != null">{{ table.desc }}</div>
+                        <div style='font-weight: bold; color: #fff; font-size: 1vw;' ng-hide="table.desc != null">T.O.</div>
+                    </div>
+                </paper-card>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

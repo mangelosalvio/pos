@@ -1,0 +1,124 @@
+<style>
+    .si-table{
+        width:100%;
+        border-collapse: collapse;
+    }
+    .si-table thead td{
+        color:rgb(117,117,117);
+        border-bottom: 1px solid #c0c0c0;
+    }
+
+    .si-table tbody td{
+        padding:3px;
+        border-bottom: 1px solid #c0c0c0;
+        padding: 10px 5px;
+        font-size:12px;
+        color:rgb(33,33,33);
+    }
+
+    .si-table tbody td:nth-child(1),
+    .si-table tbody td:nth-child(3),
+    .si-table tbody td:nth-child(4),
+    .si-table thead td:nth-child(1),
+    .si-table thead td:nth-child(3),
+    .si-table thead td:nth-child(4){
+        text-align: right;
+    }
+
+    .si-table tfoot td{
+        text-align:right;
+    }
+
+    .si-table tr:hover td{
+        background-color: #eeeeee;
+        cursor: pointer;
+    }
+    .si-table td:nth-child(n+6){
+        text-align: right;
+    }
+</style>
+
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Sale Transaction</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="width: 600px; max-height:900px;">
+        <div class="layout horizontal">
+            <div class="flex-1">OS#</div>
+            <div class="flex-8">{{ sale.id }}</div>
+        </div>
+        <div class="layout horizontal">
+            <div class="flex-1">Table</div>
+            <div class="flex-8">{{ sale.table.table_desc }}</div>
+        </div>
+        <div class="layout horizontal">
+            <div class="flex-1">Customer</div>
+            <div class="flex-8">{{ sale.customer_ame }}</div>
+        </div>
+
+        <div class="layout horizontal">
+            <div class="flex-1">Date/Time</div>
+            <div class="flex-8">{{ sale.sale_datetime }}</div>
+        </div>
+
+        <table class="si-table" style="margin-top: 10px;">
+            <thead>
+            <tr>
+                <td>Qty</td>
+                <td>Desc</td>
+                <td>Price</td>
+                <td>Amount</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="product in sale.products">
+                <td>{{ product.pivot.quantity | number : 2 }}</td>
+                <td>{{ product.product_desc }}</td>
+                <td>{{ product.pivot.price | number : 2 }}</td>
+                <td>{{ product.pivot.gross_amount | number : 2 }}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3">Gross Amount</td>
+                <td>{{ sale.gross_amount | number : 2 }}</td>
+            </tr>
+            <tr>
+                <td colspan="3">Less Vat Discount</td>
+                <td>{{ sale.vat_discount_amount | number : 2 }}</td>
+            </tr>
+            <tr>
+                <td colspan="3">Less Discountt</td>
+                <td>{{ sale.discount_amount | number : 2 }}</td>
+            </tr>
+            <tr>
+                <td colspan="3">Net Amount</td>
+                <td>{{ sale.net_amount | number : 2 }}</td>
+            </tr>
+
+            <tr><td>&nbsp;</td></tr>
+
+            <tr>
+                <td colspan="3">Cash</td>
+                <td>{{ sale.cash_amount | number : 2 }}</td>
+            </tr>
+
+            <tr>
+                <td colspan="3">Change</td>
+                <td>{{ sale.change_amount | number : 2 }}</td>
+            </tr>
+
+            </tfoot>
+        </table>
+
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+        <span flex></span>
+        <md-button ng-click="done()" id="done_btn" style="margin-right:20px;" >
+            Done
+        </md-button>
+    </div>
+</md-dialog>

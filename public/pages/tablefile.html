@@ -1,0 +1,57 @@
+<style>
+    .tables-table{
+        border-collapse: collapse;
+        width:100%;
+    }
+
+    .tables-table td{
+        border-bottom: 1px solid #c0c0c0;
+        padding: 10px 5px;
+        font-size:12px;
+        color:rgb(87,87,87);
+    }
+
+    .tables-table td input{
+        padding:3px;
+    }
+
+    .tables-table thead td{
+        color: rgb(54,54,54);
+    }
+</style>
+
+<div class="layout horizontal">
+    <div class="layout vertical flex-4" style="padding:20px;">
+        <md-input-container>
+            <label>Table Description</label>
+            <input ng-model="table.table_desc" id="table_desc" autofocus="autofocus"
+                   onkeypress="if ( event.keyCode == 13 ){ $('#add_btn').click(); return false;}">
+        </md-input-container>
+
+        <md-button class="md-raised" ng-click="add()" id="add_btn">Save</md-button>
+    </div>
+
+    <div class="flex"></div>
+
+    <div class="layout vertical flex-6" style="padding:20px;">
+        <table class="tables-table">
+            <thead>
+            <tr>
+                <td style="width:2%;"></td>
+                <td style="text-align:left;">Table Desc</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="table in tables">
+                <td nowrap>
+                    <iron-icon icon="close" style="color:#f00; cursor: pointer;" ng-click="delete(table)"></iron-icon>
+                    <iron-icon icon="create" style="color:#607d8b; cursor: pointer;" ng-click="edit(table);"></iron-icon>
+                </td>
+                <td style="text-align:left;">
+                    {{ table.table_desc }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
