@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apollo</title>
+    <title>{{ Config::get('constants.COMPANY_NAME') }}</title>
 
     {!! HTML::script('bower_components/webcomponentsjs/webcomponents.min.js') !!}
 

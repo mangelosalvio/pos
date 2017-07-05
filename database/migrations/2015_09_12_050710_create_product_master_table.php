@@ -32,7 +32,7 @@ class CreateProductMasterTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('product_desc');
-            $table->string('stock_code');
+            $table->string('stock_code')->nullable();
             $table->integer('category_id')->unsigned();
             $table->integer('serving_size')->unsigned();
             $table->decimal('price',12,2);
